@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import taskRouter from "./routes/taskRouter.js";
+import taskRouter from "./routes/taskRoute.js";
 import { MongoClient } from "mongodb";
 import "dotenv/config";
 // import cors from "cors";
