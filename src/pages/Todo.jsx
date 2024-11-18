@@ -30,6 +30,7 @@ const Todo = () => {
     const newTask = { content: todoContent, importance: selectedItem };
     axios.post("http://localhost:5000/tasks", newTask).then((res) => {
       setList((prev) => [...prev, res.data]);
+      console.log(res.data)
       setTodoContent("");
     });
   }
@@ -77,6 +78,7 @@ const Todo = () => {
         </InputGroup>
       </form>
       <div className="todo-list">
+        {list}
         <div>
           {list.map((task, index) => (
             <>
