@@ -1,38 +1,43 @@
 import express from "express";
-import cors from "cors";
-
-import taskRouter from "./routes/taskRoute.js";
-import { MongoClient } from "mongodb";
-import "dotenv/config";
 // import cors from "cors";
+// import mongoose from "mongoose";
+
+import taskRouter from "./src/routes/taskRoute.js";
+import { connectToDB } from "./src/utils/connectToDB.js";
+import "dotenv/config";
+
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+
+// ========== connection between frontend and backend ==========
+// app.use(cors());
+
+// ==========  routes ==========
+app.use("/", taskRouter);
+// app.use("/", userRouter);
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const DB_NAME = process.env.DATABASE_NAME;
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.EXAMPLE_PORT || 5000;
+const KEY = process.env.SECRET_EXAMPLE_KEY;
 
-// choose Client
-const client = new MongoClient(MONGODB_URI);
+function startServer() {
+  app.listen(PORT, () => {
+    console.log(`Server running on PORT: ${PORT}`);
+  });
+}
 
-const connectToDB = async () => {
-  try {
-    await client.connect();
-    console.log("connected to MongoDB");
-  } catch (error) {
-    console.error("Failed to connect to MongoDB", error);
-    // process.exit(1);
-  }
-};
+connectToDB(MONGODB_URI)
+  .then(() => startServer())
+  .catch((error) => {
+    console.error(error);
+    // process.exit(2)
+  });
 
-// choose Datenbank
-export const db = client.db(DB_NAME);
-await connectToDB();
 
-// -------------------------- ENDPOINTS --------------------------
-app.use("/tasks", taskRouter);
+  // mit MongoDB verbinden
+// const client = new MongoClient(MONGODB_URI);
 
-app.listen(PORT, () => {
-  console.log(`Server running on PORT: ${PORT}`);
-});
+// Datenbank auswählen
+// const db = client.db(DB_NAME);
