@@ -1,12 +1,22 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const taskSchema = new mongoose.Schema({
-title: String,
-author: [String],
-date: Date,
-description: String,
-completed: Boolean,
-})
+const authorSchema = new Schema({
+  firstName: { type: String },
+  lastName: { type: String },
+});
 
-export const Task = mongoose.model("Task", taskSchema);
+const taskSchema = new Schema(
+  {
+    title: String,
+    author: { type: authorSchema, required: true },
+    date: { type: Date },
+    description: { type: String },
+    completed: { type: Boolean },
+    review: { type: String },
+  },
+  {
+    timestamp: true,
+  }
+);
 
+export default model("Task", taskSchema);

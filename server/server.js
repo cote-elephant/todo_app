@@ -28,6 +28,8 @@ function startServer() {
   });
 }
 
+// app.use("*", invalidRoute)
+
 connectToDB(MONGODB_URI)
   .then(() => startServer())
   .catch((error) => {
