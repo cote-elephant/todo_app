@@ -1,8 +1,11 @@
+import { NavLink } from "react-router-dom";
 function Header() {
   return (
     <>
-      <h1>Todo</h1>
-      {/* <Navbar>hello</Navbar> */}
+      <NavLink to="/">
+        <h1>Todo</h1>
+      </NavLink>
+      <NavLink to="/tasks">create Task</NavLink>
     </>
   );
 }

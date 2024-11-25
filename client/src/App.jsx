@@ -1,5 +1,5 @@
-import Todo from '@pages/Todo';
-import Header from '@pages/Header'
+import Header from "@pages/Header";
+import { Outlet } from "react-router-dom";
 // Du kannst in diesem Projekt einfach über @components auf den Ordner src/components zugreifen.
 // somit kannst du mit '@components/deineDatei' importieren und musst nicht den ganzen Pfad schreiben.
 // dass erspart dir auch das schreiben von '../' wenn du eine Datei importierst die sich in einem anderen Ordner befindet.
@@ -9,13 +9,12 @@ import Header from '@pages/Header'
 // @pages
 
 function App() {
-
   return (
     <>
-    <Header />
-      <Todo />
+      <Header />
+      <Outlet />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

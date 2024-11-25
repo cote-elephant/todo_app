@@ -1,12 +1,12 @@
 import { Task } from "../models/taskModel.js";
 
-//*GET--------------------------
+//*GET ONE--------------------------
 export async function getSingleTask(req, res) {
   //checkHandler for if ID is valid
   try {
     const getItem = await Task.findById(req.params.id);
     // if(getItem.length === 0)
-    console.log(getItem)
+    console.log(getItem);
     getItem
       ? res.status(200).json({
           message: "Todo retrieved",
@@ -20,6 +20,7 @@ export async function getSingleTask(req, res) {
   }
 }
 
+//*GET ALL--------------------------
 export async function getAllTasks(req, res) {
   try {
     const getItems = await Task.find();
@@ -31,7 +32,7 @@ export async function getAllTasks(req, res) {
       : res.sendStatus(404).json({ message: "No tasks found" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({message: "failed to retrieve tasks"});
+    res.status(500).json({ message: "failed to retrieve tasks" });
   }
 }
 
@@ -39,20 +40,21 @@ export async function getAllTasks(req, res) {
 export async function createTask(req, res) {
   try {
     const createItem = await Task.create(req.body);
+    
     createItem
       ? res.status(200).json({
           message: "Todo created",
           method: req.method,
           content: createItem,
         })
-      : res.sendStatus(404);
+      : res.status(404).json({ message: "Failed to create new To-Do" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to create Todo" });
   }
 }
 
-//* EDIT--------------------------
+//* EDIT MANY--------------------------
 export async function updateTask(req, res) {
   //checkHandler for if ID is valid
   try {
@@ -71,6 +73,7 @@ export async function updateTask(req, res) {
     res.status(500).json({ message: "Failed to update Task" });
   }
 }
+//* EDIT ONE--------------------------
 export async function patchTask(req, res) {
   //checkHandler for if ID is valid
   try {
@@ -92,14 +95,20 @@ export async function patchTask(req, res) {
   }
 }
 
-//*DELETE--------------------------
+//*DELETE ONE--------------------------
 export async function deleteSingleTask(req, res) {
   //checkHandler for if ID is valid
   try {
     const deleteItem = await Task.findByIdAndDelete(req.params.id);
     deleteItem
-      ? res.status(200).json({ message: "Todo deleted", method: req.method, content: deleteItem })
-      : res.status(404).json({message: "Tasks not found"});
+      ? res
+          .status(200)
+          .json({
+            message: "Todo deleted",
+            method: req.method,
+            content: deleteItem,
+          })
+      : res.status(404).json({ message: "Tasks not found" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to delete Todo" });

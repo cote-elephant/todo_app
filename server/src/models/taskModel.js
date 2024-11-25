@@ -7,16 +7,14 @@ const authorSchema = new Schema({
 
 const taskSchema = new Schema(
   {
-    title: String,
-    author: { type: authorSchema, required: true },
-    date: { type: Date },
-    description: { type: String },
-    completed: { type: Boolean },
-    review: { type: String },
+    title: { type: String, required: true },
+    importance: { type: String, required: true },
+    completed: { type: Boolean, default: false },
+    date: Date,
   },
   {
     timestamp: true,
   }
 );
 
-export default model("Task", taskSchema);
+export const Task = model("Task", taskSchema);

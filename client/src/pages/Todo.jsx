@@ -17,8 +17,8 @@ const Todo = () => {
   useEffect(() => {
     axios
       .get("http://localhost:5173/tasks") // Adjust URL based on backend's address
-      .then((response) => {
-        setList(response.data);
+      .then((res) => {
+        setList(res.data);
       })
       .catch((error) => {
         console.error("There was an error fetching the tasks!", error);
@@ -78,17 +78,19 @@ const Todo = () => {
         </InputGroup>
       </form>
       <div className="todo-list">
+        {list}
         {/* {list && (
-          <div>
+          <>
             {list.map((task, index) => (
               <>
-                
-                 <Button onClick={deleteTask}>Delete</Button> 
+                <Button onClick={deleteTask}>Delete</Button>
               </>
-            ))}  </div>*/}
-        <p>
-          {list.content} - {list.importance}
-        </p>
+            ))}
+            <p>
+              {list.content} - {list.importance}
+            </p>
+          </>
+        )} */}
       </div>
     </>
   );
